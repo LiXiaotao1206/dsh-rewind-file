@@ -1,0 +1,15 @@
+# dsh-rewind-file bundle patch: mount the rewind-file plugin.
+# Captures a git snapshot of the workspace at every step/end, and restores the
+# files automatically when dsh's /rewind forks the session (opencode-style:
+# side bare-git repo + write-tree snapshots + per-file checkout). No new
+# commands — it rides the existing rewind. Tune via config below.
+- insert:
+    - id: dsh-rewind-file
+      name: dsh-rewind-file
+      config:
+        enabled: true
+        gitBin: git
+        # Empty → $DSH_HOME/rewind-file (fallback ~/.dsh/rewind-file).
+        snapshotDir: ''
+        excludeGlobs: [node_modules, .git, .dsh, dist, build]
+        maxSnapshots: 500
